@@ -1,8 +1,21 @@
 import { Router } from "express";
 import { registerUser } from "../controllers/user.controller.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
 
-router.route("/register").post(registerUser); // http://localhost:5000/api/v1/usersregister => This is how the url becomes
+router.route("/register").post(
+  upload.fields([
+    {
+      name: "avatar",
+      maxCount: 1,
+    },
+    {
+      name: "coverImage",
+      maxCount: 1,
+    },
+  ]),
+  registerUser
+); // http://localhost:5000/api/v1/usersregister => This is how the url becomes
 
 export default router;
