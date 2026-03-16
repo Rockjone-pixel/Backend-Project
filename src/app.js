@@ -20,4 +20,10 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" })); // Parses form d
 app.use(express.static("public")); // Serves static files from the public folder.
 app.use(cookieParser()); // Parses cookies from incoming requests.
 
+// routes
+import userRouter from "./routes/user.routes.js";
+
+// routes decalaration
+app.use("/api/v1/users", userRouter);
+
 export { app };

@@ -7,7 +7,31 @@ const asyncHandler = (requestHandler) => {
   };
 };
 
-export { asyncHandler };
+export { asyncHandler }; // → ES Modules (ESM)
+//  module.exports = { asyncHandler } → CommonJS
+
+//             The overall flow of asyncHandler in Express routes:
+
+// Express calls route
+//        │
+//        ▼
+// asyncHandler wrapper
+//        │
+//        ▼
+// requestHandler(req,res,next)
+//        │
+//        ▼
+// async function executes
+//        │
+//        ├── success → response sent
+//        │
+//        └── error → Promise rejected
+//                      │
+//                      ▼
+//                   catch()
+//                      │
+//                      ▼
+//                  next(err)
 
 // asyncHandler is a higher-order function that wraps async Express route handlers and automatically catches errors
 
