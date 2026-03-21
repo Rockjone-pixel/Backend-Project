@@ -1,6 +1,12 @@
 import { Router } from "express";
-import { registerUser } from "../controllers/user.controller.js";
+import {
+  registerUser,
+  logInUser,
+  logOutUser,
+  refreshAccessToken
+} from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
@@ -17,6 +23,12 @@ router.route("/register").post(
   ]),
   registerUser
 ); // http://localhost:5000/api/v1/users/register => This is how the url becomes
+
+router.route("/login").post(logInUser);
+
+// secured routes
+router.route("/logout").post(verifyJWT, logOutUser);
+router.route("/refresh-token").post(refreshAccessToken)
 
 export default router;
 
